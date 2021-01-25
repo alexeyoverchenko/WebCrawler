@@ -1,49 +1,51 @@
 package com.example.webapp;
 
+import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
-import java.io.*;
-import java.net.URL;
-import java.util.HashMap;
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@AllArgsConstructor
 public class Parser {
 
-    private Site site;
-    public Parser(Site site) {
-        this.site = site;
+    private final Site site;
+
+    void getTextFromUrl() throws IOException {
+        String data = Jsoup.connect(site.getUrl())
+                .ignoreHttpErrors(true)
+                .get()
+                .toString();
+        if (data != null) {
+            site.setTextFromUrl(data);
+        }
     }
 
-    void getTextFromUrl() throws IOException  {
-        site.setTextFromUrl(Jsoup.connect(site.getUrl()).ignoreContentType(true).get().toString());
-//        site.setTextFromUrl(Jsoup.parse(new URL(site.getUrl()), 10000).toString());
-    }
-
-    void findWord(){
+    void findKeywords() {
         int totalCount = 0;
-        for (Map.Entry<String, Integer> pointWord : site.getPointWords().entrySet()) {
+        for (Map.Entry<String, Integer> pointWord : site.getKeywords().entrySet()) {
             int count = 0;
-            Pattern pattern = Pattern.compile("[\": ]"+pointWord.getKey()+ "[,.\":' ]");
+            Pattern pattern = Pattern.compile("[\": ]" + pointWord.getKey() + "[,.\":' ]");
             Matcher matcher = pattern.matcher(site.getTextFromUrl());
-            while(matcher.find()) {
+            while (matcher.find()) {
                 count++;
             }
-            site.getPointWords().put(pointWord.getKey(), count);
+            site.getKeywords().put(pointWord.getKey(), count);
             totalCount += count;
         }
-        site.getPointWords().put("Total", totalCount);
+        site.getKeywords().put("Total", totalCount);
     }
 
-
     void findLinks() {
-        Pattern patternForLinks = Pattern.compile("(?<=href=\")https?:[^\"\\\\<]+");
+        Pattern patternForLinks = Pattern.compile("(?<=href=\")http:[^\"\\\\<]+");
         Matcher matcherForLinks = patternForLinks.matcher(site.getTextFromUrl());
         while (matcherForLinks.find()) {
             String url = matcherForLinks.group();
-            if(!(url.equals(site.getUrl())))
-                    site.getAllUrlLinks().add(url);
+            if (!(url.equals(site.getUrl())))
+                site.getAllUrlLinks().add(url);
+            System.out.println(url);
         }
     }
 }
-

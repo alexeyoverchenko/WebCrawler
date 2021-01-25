@@ -1,42 +1,30 @@
 package com.example.webapp;
-import java.util.HashMap;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class Site {
+@Getter
+@Setter
+public class Site implements Comparable<Site> {
 
-    private HashSet<String> allUrlLinks = new HashSet<String>();
-    private LinkedHashMap<String, Integer> pointWords = new LinkedHashMap<String, Integer>();
+    private Set<String> allUrlLinks = new HashSet<>();
+    private Map<String, Integer> keywords = new LinkedHashMap<>();
     private String url;
     private String textFromUrl;
 
-    public String getTextFromUrl() {
-        return textFromUrl;
-    }
-
-    public void setTextFromUrl(String textFromUrl) {
-        this.textFromUrl = textFromUrl;
-    }
-
-    public HashSet<String> getAllUrlLinks() {
-        return allUrlLinks;
-    }
-
-    public HashMap<String, Integer> getPointWords() {
-        return pointWords;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setPointWords(String...words) {
+    public void setKeywords(String... words) {
         for (String word : words) {
-            this.pointWords.put(word, 0);
+            this.keywords.put(word, 0);
         }
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    @Override
+    public int compareTo(Site s) {
+        return s.getKeywords().get("Total").compareTo(getKeywords().get("Total"));
     }
 }
