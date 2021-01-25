@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class Utilite {
+public class Utility {
     public static void writeSitesToFile(String WRITING_PATH, List<Site> finalSites) throws IOException {
         FileWriter fileWriter = new FileWriter(WRITING_PATH, true);
         fileWriter.write("Site, \"Tesla\", \"Musk\", \"Gigafactory\", \"Elon Mask\", \"Total\" \r\n");

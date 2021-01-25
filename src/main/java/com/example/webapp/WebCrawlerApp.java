@@ -20,7 +20,7 @@ public class WebCrawlerApp {
         finalSites.add(site);
         siteCollector.collectSites(site);
         Collections.sort(finalSites);
-        Utilite.writeSitesToFile(WRITING_PATH, finalSites);
+        Utility.writeSitesToFile(WRITING_PATH, finalSites);
     }
 
 }
