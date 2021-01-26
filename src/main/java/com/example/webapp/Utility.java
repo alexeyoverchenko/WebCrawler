@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Utility {
     public static void writeSitesToFile(String WRITING_PATH, List<Site> finalSites) throws IOException {
+        System.out.println("HERE");
         FileWriter fileWriter = new FileWriter(WRITING_PATH, true);
         fileWriter.write("Site, \"Tesla\", \"Musk\", \"Gigafactory\", \"Elon Mask\", \"Total\" \r\n");
         for (int i = 0; i < 10; i++) {

@@ -9,8 +9,8 @@ import java.util.*;
 public class SiteCollector {
 
     private final String[] keywords;
-    private int maxPageToFetch;
     private int maxCrawlDepth;
+    private int maxPageToFetch;
     static boolean isReadyToRecursion = true;
     static List<String> uniqueUrl = new ArrayList<String>();
     static List<Site> childSites = new ArrayList<Site>();
@@ -43,7 +43,7 @@ public class SiteCollector {
         maxCrawlDepth -= 1;
         List<Site> parentSites = new ArrayList<Site>(childSites);
         childSites.clear();
-        if (breakConditions()) {
+        if (!breakConditions()) {
             for (Site site : parentSites) {
                 collectSites(site);
                 if (breakConditions()) break;
@@ -53,6 +53,8 @@ public class SiteCollector {
         WebCrawlerApp.finalSites.addAll(parentSites);
         parentSites.clear();
         if (!breakConditions()) recursion();
+        System.out.println(maxPageToFetch + " Page to fetch");
+        System.out.println(maxCrawlDepth + " Deep");
     }
 
     public boolean breakConditions() {

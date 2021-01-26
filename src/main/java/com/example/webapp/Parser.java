@@ -16,6 +16,7 @@ public class Parser {
     void getTextFromUrl() throws IOException {
         String data = Jsoup.connect(site.getUrl())
                 .ignoreHttpErrors(true)
+                .ignoreContentType(true)
                 .get()
                 .toString();
         if (data != null) {
@@ -45,7 +46,6 @@ public class Parser {
             String url = matcherForLinks.group();
             if (!(url.equals(site.getUrl())))
                 site.getAllUrlLinks().add(url);
-            System.out.println(url);
         }
     }
 }

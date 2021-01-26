@@ -10,7 +10,7 @@ public class WebCrawlerApp {
     private final static String WRITING_PATH = "/Users/antonpus/Work/MyWork/webCrawler.csv";
     private final static String SEED_PAGE = "https://en.wikipedia.org/wiki/Elon_Musk";
     public static String[] keywords = {"Tesla", "Musk", "Gigafactory", "Elon Mask"};
-    static int maxPageToFetch = 10000;
+    static int maxPageToFetch = 100;
     static int maxCrawlDepth = 8;
     static List<Site> finalSites = new ArrayList<Site>();
 
